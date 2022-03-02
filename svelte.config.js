@@ -1,5 +1,6 @@
 import adapter from '@sveltejs/adapter-auto';
 import preprocess from 'svelte-preprocess';
+import AutoImport from 'unplugin-auto-import/vite';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -8,7 +9,15 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
+		vite: {
+			plugins: [
+				AutoImport({
+					dts: './src/auto-imports.d.ts',
+					imports: ['svelte', 'svelte/store']
+				})
+			]
+		}
 	}
 };
 
